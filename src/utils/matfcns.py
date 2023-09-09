@@ -130,7 +130,7 @@ def gravityF(grade, mass):
     Computes gravity force in N (kg m/s^2)
     '''
     g = 9.8067 # gravity constant in m/s^2
-    return mass * g * np.sin(np.divide(np.arctan2(grade, 100), 1))
+    return mass * g * np.sin(np.arctan(grade/100))
 
 def roll_resistF(grade, mass, Crr=0.005):
     '''
@@ -138,4 +138,4 @@ def roll_resistF(grade, mass, Crr=0.005):
     Crr: dimensionless coef of rolling resistance 
     '''
     g = 9.8067 # gravity constant in m/s^2
-    return Crr * mass * g * np.cos(np.arctan2(np.divide(grade, 100), 1))
+    return Crr * mass * g * np.cos(np.arctan(grade/100))
