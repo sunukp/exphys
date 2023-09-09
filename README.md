@@ -15,3 +15,4 @@ The initial set of bike sensors we utilize are:
 - Garmin Varia RTL515 bike radar (vehicle count and speed)
 - SRAM Quarq Rival AXS power meter (power, cadence)
   
+For the preliminary EDA, please examine the notebook titled [eda.ipynb](notebooks/eda.ipynb)
