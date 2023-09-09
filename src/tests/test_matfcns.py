@@ -1,7 +1,6 @@
 import numpy as np
-from utils.matfcns import *
+from src.utils.matfcns import *
 
-# print(TEMP_DENSITY)
 PRECISION=4
 
 
@@ -14,9 +13,10 @@ if __name__ == '__main__':
     assert (np.round(dragF(v_as, area=0.5089), PRECISION) == [4.8255, 12.3534, 15.6347]).all()
     assert (np.round(dragF(v_as, rhos, area=0.63), PRECISION) == [6.9458, 25.4016, 48.2234]).all()
 
-    dx=[1, 10, 100]
-    dy=[10, 100, 1000]
-    assert (np.round(gradeP(dy, dx), PRECISION) == [1000, 1000, 1000]).all()
+    dx=[1, 10, 100, 0, 0]
+    dy=[10, 100, 1000, 0, 1]
+    gd=gradePrcnt(dy, dx)
+    assert (np.round(gd[:-1], PRECISION) == [1000, 1000, 1000, 0]).all() #and np.isnan(gd[-1]).all()
 
     gd=[10, 11, 12] # grade
     mass=95

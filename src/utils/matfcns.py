@@ -111,14 +111,18 @@ def dragF(v_as, rho=1.2041, area=0.5089, Cd=0.63):
     return 0.5 * Cd * area * np.multiply(rho, np.power(v_as, 2))
 
 
-def gradeP(dy, dx):
+def gradePrcnt(dy, dx):
     '''
     Computes grade (rise/run) percentage
     '''
-    if dy == 0 and dx == 0:
-        return 0
-    else:
-        return np.divide(dy, dx) * 100
+    dx = np.array(dx, dtype=float)
+    dy = np.array(dy, dtype=float)
+
+    grade = np.divide(dy, dx, out=np.zeros_like(dx, dtype=float), where=dx!=0) * 100
+    grade[np.logical_and(np.equal(dx, 0), np.equal(dy, 0))] = 0
+    grade[np.logical_and(np.equal(dx, 0), dy > 0)] = np.inf
+    grade[np.logical_and(np.equal(dx, 0), dy < 0)] = -np.inf
+    return grade
 
 
 def gravityF(grade, mass):
