@@ -45,6 +45,7 @@ def main():
             with open(full_outfn, 'w') as outf:
                 outf.write(','.join(garmin_utils.ACTIVITY_FEATURE_NAMES) + '\n')
                 outf.writelines('\n'.join(lines))
+                outf.write('\n')
 
         except Exception as err:
             print(fn, err)
