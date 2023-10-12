@@ -23,6 +23,14 @@ def garlatlon2deg(lat_or_lon):
     return lat_or_lon/((2**32)/360)
 
 
+def gartimestamp2datetime(gar_ts):
+    '''
+    Garmin timestamp conversion.
+    Returns the local datetime
+    '''
+    return datetime.datetime.fromtimestamp(gar_ts + fitd.processors.FIT_UTC_REFERENCE)
+
+
 def read_fit_acvitity(fit_fn):
     '''
     Reads *_ACTIVITY.fit files, parses 'record' frames into a list and returns it.
