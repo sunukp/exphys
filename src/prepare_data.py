@@ -67,17 +67,16 @@ if __name__ == '__main__':
         # cadence
         df.loc[np.logical_and(df['power'] == 0, df['cadence'].isna()), 'cadence'] = 0
         first_na_locs, last_na_locs = get_first_last_na_idx(df['cadence'])
-        if len(first_na_locs)>0:
-            df['cadence'] = interpolate_vals(df, 'cadence', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'cadence', first_na_locs, last_na_locs, tol_secs=tol_secs)
     
         # position_lat/long
         first_na_locs, last_na_locs = get_first_last_na_idx(df['position_lat'])
-        df['position_lat'] = interpolate_vals(df, 'position_lat', first_na_locs, last_na_locs, tol_secs=tol_secs)
-        df['position_long'] = interpolate_vals(df, 'position_long', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'position_lat', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'position_long', first_na_locs, last_na_locs, tol_secs=tol_secs)
 
         # distance
         first_na_locs, last_na_locs = get_first_last_na_idx(df['distance'])
-        df['distance'] = interpolate_vals(df, 'distance', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'distance', first_na_locs, last_na_locs, tol_secs=tol_secs)
         del_locs = np.array(last_na_locs)+1
         df = df.drop(del_locs) # delete row after null distances as that row will see distance jumped
         df = df.reset_index(drop=True)
@@ -86,19 +85,19 @@ if __name__ == '__main__':
         mask = np.logical_and(np.isnan(df['enhanced_speed']), df['cadence'] == 0)
         df.loc[mask, 'enhanced_speed'] = 0
         first_na_locs, last_na_locs = get_first_last_na_idx(df['enhanced_speed'])
-        df['enhanced_speed'] = interpolate_vals(df, 'enhanced_speed', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'enhanced_speed', first_na_locs, last_na_locs, tol_secs=tol_secs)
 
         # enhanced_altitude
         first_na_locs, last_na_locs = get_first_last_na_idx(df['enhanced_altitude'])
-        df['enhanced_altitude'] = interpolate_vals(df, 'enhanced_altitude', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'enhanced_altitude', first_na_locs, last_na_locs, tol_secs=tol_secs)
 
         # heart_rate
         first_na_locs, last_na_locs = get_first_last_na_idx(df['heart_rate'])
-        df['heart_rate'] = interpolate_vals(df, 'heart_rate', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'heart_rate', first_na_locs, last_na_locs, tol_secs=tol_secs)
 
         # temperature
         first_na_locs, last_na_locs = get_first_last_na_idx(df['temperature'])
-        df['temperature'] = interpolate_vals(df, 'temperature', first_na_locs, last_na_locs, tol_secs=tol_secs)
+        interpolate_vals(df, 'temperature', first_na_locs, last_na_locs, tol_secs=tol_secs)
 
         # drop all remaining na:
         df = df.dropna()

@@ -21,7 +21,7 @@ def get_first_last_na_idx(sers):
             if not np.isnan(sers_val[k-1]):
                 first_na_locs.append(k)
             if k < sers.shape[0]-1:
-                if not np.isnan(sers_val[k+1]):
+                if not np.isnan(sers_val[k+1]) and len(first_na_locs) > 0:
                     last_na_locs.append(k)
 
 
@@ -46,12 +46,11 @@ def interpolate_vals(df, col, first_na_locs, last_na_locs, tol_secs=10):
             val_prev = sers_val[first_na_locs[k]-1]
             val_next = sers_val[last_na_locs[k]+1]
 
-            rang = np.linspace(val_prev, val_next, nobs)
+            rang = np.linspace(val_prev, val_next, nobs+2)
+            rang = rang[1:-1]
 
             col_idx = df.columns.get_loc(col)
-            jj = 0
-            for j in range(first_na_locs[k], last_na_locs[k]+1):
-                # sers[j] = rang[jj]
-                df.iloc[j, col_idx] = rang[jj]
-                jj += 1
-    return df[col]
+            for i, j in enumerate(range(first_na_locs[k], last_na_locs[k]+1)):
+                df.iloc[j, col_idx] = rang[i]
+
+    # return df[col]
